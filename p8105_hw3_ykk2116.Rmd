@@ -5,11 +5,37 @@ date: "10/10/2018"
 output: github_document
 ---
 
+_Loading tidyverse_
+
 ```{r}
-
-
-
-
-
+library(tidyverse)
 ```
 
+### Problem 1
+
+_Loading BRFSS dataset_
+
+```{r}
+devtools::install_github("p8105/p8105.datasets")
+
+library(p8105.datasets)
+
+data(brfss_smart2010)
+```
+
+_Cleaning of dataset and selection of variables_
+
+```{r}
+brfss_df = janitor::clean_names(dat = brfss_smart2010) %>%
+  filter(topic == "Overall Health") %>%
+  filter(response %in% c( "Excellent", "Very good", "Good", "Fair", "Poor")) %>%
+  janitor::clean_names(dat = .) %>%
+  mutate(response = as.factor(response))
+```
+
+
+
+
+
+
+  
