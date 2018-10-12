@@ -40,7 +40,9 @@ brfss_df %>%
   group_by(locationabbr) %>%
   distinct(locationdesc) %>%
   summarise(n = n()) %>%
-  filter( n == 7)
+  filter( n == 7) %>%
+  knitr::kable()
+
 ```
 
 
@@ -49,8 +51,8 @@ _Spaghetti plot_ number of locations in each state
 
 ```{r}
 brfss_df %>%
+  distinct(locationabbr, locationdesc, year) %>% 
   group_by(locationabbr, year) %>%
-  filter(year %in% c("2002":"2010")) %>%
   summarise(number_of_locations = n()) %>%
   ggplot(aes(x = year, y = number_of_locations, color = locationabbr)) +
   geom_line() +
@@ -64,9 +66,7 @@ scale_x_continuous(breaks = c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 20
 ```
 
 
-_Table_
-```{r}
-brfss_df %>%
+
   
 
 
