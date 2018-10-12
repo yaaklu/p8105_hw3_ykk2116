@@ -51,26 +51,22 @@ _Spaghetti plot_ number of locations in each state
 
 ```{r}
 brfss_df %>%
+  group_by(locationabbr, year) %>%
   filter(year %in% c("2002":"2010")) %>%
-  filter(locationabbr)
-  ggplot(aes(x = year, y = locationdesc, color = locationabbr)) +
+  summarise(number_of_locations = n()) %>%
+  ggplot(aes(x = year, y = number_of_locations, color = locationabbr)) +
   geom_line() +
- scale_x_continuous(breaks = c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010)) 
-  
+labs(
+  title = "Spaghetti Plot",
+  x = "Year",
+  y = "Number of Locations Observed",
+  caption = "BRFSS 2010 Data"
+)
+scale_x_continuous(breaks = c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010))
 ```
 
 
 
-group_by(locationabbr, year) %>% 
-  summarise(number = n()) %>% 
-  ggplot(aes(x = year, y = number, color = locationabbr)) +
-  geom_line() +
-  theme(legend.position = "bottom") +
-  labs(
-    title = "Spagetti plot",
-    x = "Year",
-    y = "Number of locations observed",
-    caption = "BRFSS 2010 data"
 
 
 
@@ -80,18 +76,13 @@ group_by(locationabbr, year) %>%
 
 _Table_
 
-```{r}
-brfss_df %>%
-  filter(year %in% c(2002, 2006, 2010)) %>% 
-  filter(locationabbr == "NY") %>%   
-  
+
   
   
 
 
 
 
-```
 
 
 
