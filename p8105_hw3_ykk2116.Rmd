@@ -34,24 +34,17 @@ brfss_df = janitor::clean_names(dat = brfss_smart2010) %>%
 ```
 
 
-```{r}
-
-
-
-```
-
-
-
 _States that were observed at 7 locations_
 
 ```{r}
 brfss_df %>%
   filter(year == 2002) %>%
+  group_by(locationabbr) %>%
   distinct(locationdesc) %>%
-  
-
-
+  summarise(n = n()) %>%
+  filter( n == 7)
 ```
+
 
 
 _Spaghetti plot_ number of locations in each state
@@ -65,6 +58,25 @@ brfss_df %>%
  scale_x_continuous(breaks = c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010)) 
   
 ```
+
+
+
+group_by(locationabbr, year) %>% 
+  summarise(number = n()) %>% 
+  ggplot(aes(x = year, y = number, color = locationabbr)) +
+  geom_line() +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "Spagetti plot",
+    x = "Year",
+    y = "Number of locations observed",
+    caption = "BRFSS 2010 data"
+
+
+
+
+
+
 
 _Table_
 
