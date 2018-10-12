@@ -65,7 +65,19 @@ labs(
 scale_x_continuous(breaks = c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010))
 ```
 
-
+_Making of Table_
+```{r}
+brfss_df %>%
+  filter(year %in% c(2002, 2006, 2010)) %>%
+  filter(locationabbr == "NY") %>%
+  spread(key = response, value = data_value) %>%
+  janitor::clean_names(dat = .) %>% 
+  group_by(locationabbr, year) %>%
+  summarise(n = n(),
+        mean = mean(excellent, na.rm = TRUE),
+        sd = sd(excellent, na.rm = TRUE)) %>%
+  knitr::kable()
+```
 
   
 
@@ -76,7 +88,6 @@ scale_x_continuous(breaks = c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 20
 
 
 
-```
 
 
 
