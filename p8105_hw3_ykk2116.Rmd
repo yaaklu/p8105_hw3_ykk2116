@@ -85,7 +85,7 @@ brfss_df %>%
   spread(key = response, value = data_value) %>%
   janitor::clean_names(dat = .) %>%
   group_by(locationabbr, year) %>%
-  summarise( n = n()),
+  summarise( n = n(),
           mean_excellent = mean(excellent, na.rm = TRUE),
           mean_very_good = mean(very_good, na.rm = TRUE),
           mean_good = mean(good, na.rm = TRUE),
@@ -122,7 +122,37 @@ instacart %>%
   knitr::kable()
 ```
 
-  
+_Plot that shows the number of items ordered in each aisle_
+
+```{r}
+instacart %>%
+  group_by(aisle_id, aisle) %>%
+  summarise(number = n()) %>%
+  arrange(desc(number)) %>%
+  mutate(asile = tools::toTitleCase(aisle)) %>%
+  ggplot(aes(x = reorder(aisle, -number), y = number, fill = aisle)) +
+  geom_col() +
+  theme(axis.title.x = element_text(angle = 80, hjust = 1, size = 8),
+        legend.position = "none") +
+  labs(
+    title = "Number of items ordered in each aisle",
+    x = "Aisle",
+    y = "Frequency of orders",
+    caption = "Data from 2017 Instacart Online Grocery Shopping"
+  )
+```
+
+
+_Table showing the most popular item in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”_
+
+```{r}
+
+
+
+
+```
+
+
 
 
 
