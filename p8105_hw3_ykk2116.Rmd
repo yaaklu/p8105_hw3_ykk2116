@@ -114,21 +114,14 @@ instacart %>%
   count()
 
 instacart %>%
-  
-
-
-
-
+  group_by(aisle_id, aisle) %>%
+  summarise(number = n()) %>%
+  ungroup() %>%
+  top_n(5, number) %>%
+  arrange(desc(number)) %>%
+  knitr::kable()
 ```
 
-instacart %>% 
-  group_by(aisle_id, aisle) %>% 
-  summarise(number = n()) %>% 
-  ungroup() %>% 
-  top_n(5, number) %>% 
-  arrange(desc(number)) %>% 
-  knitr::kable() 
-  
   
 
 
