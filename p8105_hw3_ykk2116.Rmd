@@ -48,6 +48,9 @@ brfss_df %>%
 
 ```
 
+** According to the table above, in 2002, the states of CT, FL, NC were observed at 7 locations.**
+
+
 _Spaghetti plot that shows the number of locations in each state from 2002 to 2010_
 
 ```{r}
@@ -57,14 +60,16 @@ brfss_df %>%
   summarise(number_of_locations = n()) %>%
   ggplot(aes(x = year, y = number_of_locations, color = locationabbr)) +
   geom_line() +
+scale_x_continuous(breaks = c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010)) +
 labs(
   title = "Spaghetti Plot",
   x = "Year",
   y = "Number of Locations Observed",
   caption = "BRFSS 2010 Data"
 )
-scale_x_continuous(breaks = c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010))
 ```
+
+**Looking at the plot above, we can see that majority of the states showed a similar trend across all the years. However, for one of the states, there was a huge spike or increase from 2006 to 2007 and it decreased again in 2008. However there was another increase from 2009 to 2010. The particular state is hard to identify as it is.**
 
 
 _Table that shows the mean and standard deviation of the "excellent" responses across locations in NY state for 2002, 2006 and 2010_
@@ -106,11 +111,6 @@ average_brfss %>%
   ) +
   scale_fill_discrete(name = "Response") +
   theme(axis.text.x = element_text(angle = 45, size = 7, hjust = 1))
-  
-
-
-
-
 ```
 
 
