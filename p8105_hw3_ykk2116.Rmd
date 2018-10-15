@@ -27,7 +27,7 @@ library(p8105.datasets)
 data(brfss_smart2010)
 ```
 
-_Cleaning of dataset and selection of variables_
+_Cleaning of BRFSS dataset and selection of variables_
 
 ```{r}
 brfss_df = janitor::clean_names(dat = brfss_smart2010) %>%
@@ -35,7 +35,6 @@ brfss_df = janitor::clean_names(dat = brfss_smart2010) %>%
   mutate(response = forcats::fct_relevel(response, c("Excellent", "Very good", "Good", "Fair", "Poor")))
 ```
 
-select(-(class:question), -sample_size, -(confidence_limit_low:geo_location)) %>% 
 _States that were observed at 7 locations_
 
 ```{r}
@@ -49,7 +48,7 @@ brfss_df %>%
 
 ```
 
-_Spaghetti plot_ number of locations in each state
+_Spaghetti plot that shows the number of locations in each state from 2002 to 2010_
 
 ```{r}
 brfss_df %>%
@@ -68,7 +67,8 @@ scale_x_continuous(breaks = c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 20
 ```
 
 
-_Making of Table_
+_Table that shows the mean and standard deviation of the "excellent" responses across locations in NY state for 2002, 2006 and 2010_
+
 ```{r}
 brfss_df %>%
   filter(year %in% c(2002, 2006, 2010)) %>%
@@ -84,6 +84,8 @@ brfss_df %>%
 
 
 
+_A five-panel plot that shows, for each response category separately, the distribution of these state-level averages over time_
+
 ```{r}
 average_brfss =
   brfss_df %>%
@@ -97,13 +99,13 @@ average_brfss %>%
   facet_grid(.~response) +
   stat_summary(fun.y = median, geom = "point", size = 0.5) +
   labs(
-     title = "Number of items ordered in each aisle",
-    x = "Aisle",
-    y = "Frequency of orders",
-    caption = "Data from 2017 Instacart Online Grocery Shopping"
+     title = "Distributon of state-level average proportion in each response category",
+    x = "Year",
+    y = "Average proportion in each response category",
+    caption = "BRFSS 2010 Data"
   ) +
-  scale_fill_discrete(name = "response") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  scale_fill_discrete(name = "Response") +
+  theme(axis.text.x = element_text(angle = 45, size = 7, hjust = 1))
   
 
 
