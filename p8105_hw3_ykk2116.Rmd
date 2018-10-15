@@ -32,11 +32,10 @@ _Cleaning of dataset and selection of variables_
 ```{r}
 brfss_df = janitor::clean_names(dat = brfss_smart2010) %>%
   filter(topic == "Overall Health") %>%
-  select(-(class:question), -sample_size, -(confidence_limit_low:geo_location)) %>% 
   mutate(response = forcats::fct_relevel(response, c("Excellent", "Very good", "Good", "Fair", "Poor")))
 ```
 
-
+select(-(class:question), -sample_size, -(confidence_limit_low:geo_location)) %>% 
 _States that were observed at 7 locations_
 
 ```{r}
@@ -97,8 +96,37 @@ brfss_df %>%
           mean_poor = mean(poor, na.rm = TRUE)) %>%
   gather(key = mean_variable, value = mean_value, mean_excellent:mean_poor) %>%
   ggplot(aes(x = year, y = mean_value, color = locationabbr)) +
-  geom_line() +
+  geom_violin(fill = factor(mean_variable)) +
   facet_grid(~mean_variable) 
+```
+
+
+
+```{r}
+average_brfss =
+  brfss_df %>%
+  group_by(locationabbr, year, response) %>%
+  summarise(average = mean(data_value, na.rm = TRUE))
+
+
+average_brfss %>%
+  ggplot(aes(x = factor(year), y = average)) +
+  geom_violin(aes(fill = factor(response))) +
+  facet_grid(.~response) +
+  stat_summary(fun.y = median, geom = "point", size = 0.5) +
+  labs(
+     title = "Number of items ordered in each aisle",
+    x = "Aisle",
+    y = "Frequency of orders",
+    caption = "Data from 2017 Instacart Online Grocery Shopping"
+  ) +
+  scale_fill_discrete(name = "response") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
+
+
+
 ```
 
 
@@ -128,7 +156,7 @@ instacart %>%
 
 _Plot that shows the number of items ordered in each aisle_
 
-```{r}
+```{r barplot, fig.height=20}
 instacart %>%
   group_by(aisle_id, aisle) %>%
   summarise(number = n()) %>%
@@ -143,7 +171,8 @@ instacart %>%
     x = "Aisle",
     y = "Frequency of orders",
     caption = "Data from 2017 Instacart Online Grocery Shopping"
-  )
+  ) +
+coord_flip()
 ```
 
 
@@ -208,7 +237,7 @@ noaa_df %>%
             sum = sum(tmax, na.rm = TRUE),
             mean = mean(tmax, na.rm = TRUE)) %>% 
   filter(month %in% c("Jan", "Jul")) %>% 
-  ggplot(aes(x = year, y = mean, color = id)) +
+  ggplot(aes(x = year, y = mean, color = month)) +
   facet_grid(~month) + 
   geom_point() +
   theme(legend.position = "none", 
@@ -219,12 +248,23 @@ noaa_df %>%
 ```
 
 
+
+_extent of NA_
+```{r}
+sum_na = sapply(noaa_df, function(x) sum(is.na(x)))
+prop_na = sapply(noaa_df, function(x) sum(is.na(x)/nrow(noaa_df)))
+rbind(sum_na, prop_na) %>% knitr::kable(digits = 2)
+
+
+
+```
+
 _Average max temperature in January and in July in each station across years_
 
 ```{r}
 noaa_df %>% 
   filter(month %in% c("Jan", "Jul")) %>% 
-  ggplot(aes(x = year, y = tmax, color = year)) +
+  ggplot(aes(x = year, y = tmax, color = month)) +
   facet_grid(~month) +
   geom_boxplot() +
   theme(legend.position = "none", 
