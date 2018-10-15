@@ -9,6 +9,9 @@ _Loading tidyverse_
 
 ```{r}
 library(tidyverse)
+library(ggthemes)
+library(patchwork)
+library(hexbin)
 ```
 
 ### Problem 1
@@ -146,16 +149,18 @@ instacart %>%
 _Table showing the most popular item in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”_
 
 ```{r}
-
-
-
-
+instacart %>%
+  select(aisle_id, aisle, product_id, product_name) %>%
+  filter(aisle == "baking ingredients" | aisle == "dog food care" | aisle == "packaged vegetables fruits") %>%
+  group_by(aisle, product_name) %>%
+  summarise(number = n()) %>%
+  ungroup() %>%
+  top_n(1, number) %>%
+  arrange(desc(number)) %>%
+  knitr::kable()
 ```
 
-
-
-
-
+ 
 
 
 
