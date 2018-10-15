@@ -225,6 +225,7 @@ _Loading nynoaa dataset_
 data("ny_noaa")
 ```
 
+_Data cleaning_
 
 ```{r}
 noaa_df = ny_noaa %>% 
@@ -236,6 +237,10 @@ noaa_df = ny_noaa %>%
          prcp = prcp/10)
 ```
 
+_Short description of data_
+
+**The dataset has `r nrow(noaa_df)` observations and `r ncol(noaa_df)` variables. The dataset also contains `r nrow(distinct(noaa_df, id))` unique stations that recorded weather information from the years 1981 to 2010. There are variables that also has information on precipitation (prcp), maximum and minimum temperature (tmax and tmin) and snow fall(snow) and snow depth (snwd).** 
+
 
 ```{r}
 noaa_df %>% 
@@ -244,6 +249,9 @@ noaa_df %>%
   arrange(desc(number))
 ```
 
+**For snowfall, the most commonly observed values are 0 and NA. This is probably due to the fact that most days of the year there is no snowfall. Additionally, there might have been stations that may not have any records of snow due to technical difficulties in recording or perhaps they do not record any snowfall even if there are snow days.**
+
+_A two-panel plot showing the average max temperature in January and in July in each station across years_
 
 ```{r}
 noaa_df %>% 
@@ -262,14 +270,7 @@ noaa_df %>%
     discrete = TRUE) 
 ```
 
-
-
-_extent of NA_
-```{r}
-sum_na = sapply(noaa_df, function(x) sum(is.na(x)))
-prop_na = sapply(noaa_df, function(x) sum(is.na(x)/nrow(noaa_df)))
-rbind(sum_na, prop_na) %>% knitr::kable(digits = 2)
-```
+**Looking at the plot above, generally the average temperatures were higher in July, compared to January, although there were some very few outliers recorded.**
 
 _Average max temperature in January and in July in each station across years_
 
@@ -282,6 +283,10 @@ noaa_df %>%
   theme(legend.position = "none", 
         axis.text.x = element_text(angle = 45, hjust = 1, size = 5))
 ```
+
+
+
+
 
 ```{r}
 my_hex = ggplot(noaa_df, aes(x = tmin, y = tmax)) +
