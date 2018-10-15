@@ -152,12 +152,17 @@ instacart %>%
   group_by(aisle_id, aisle) %>%
   summarise(number = n()) %>%
   ungroup() %>%
-  top_n(5, number) %>%
+  top_n(10, number) %>%
   arrange(desc(number)) %>%
   knitr::kable(digits = 2)
 ```
 
-_Plot that shows the number of items ordered in each aisle_
+**From the output above, there are `r pull(count(distinct(instacart, aisle_id)))` aisles. Also, the output shows the top ten most popular aisles, with the top being fresh vegetables aisles.**
+
+
+
+
+_Bar plot that shows the number of items ordered in each aisle_
 
 ```{r barplot, fig.height=20}
 instacart %>%
@@ -178,6 +183,8 @@ instacart %>%
 coord_flip()
 ```
 
+**The barplot shows the number of times ordered in each aisle and the highest number of items corresponds to the what was previosuly observed as the 10 most popular aisles.**
+
 
 _Table showing the most popular item in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”_
 
@@ -192,6 +199,9 @@ instacart %>%
   knitr::kable(digits = 2)
 ```
 
+**From the table above, the most popular item in the "packaged vegetables fruits" is Organic Baby Spinach", that for "Baking Ingredients" is Light Brown Sugar and that for "dog food care" is Snack Sticks Chicken & Rice Recipe Dog Treats**
+
+
 _Table showing the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week_
 
 ```{r}
@@ -203,9 +213,13 @@ group_by(order_dow, product_name) %>%
   knitr::kable(digits = 2)
 ```
 
+**From the output above, for the 1st and 6th day of the week, the mean hour of the day for which the 2 products are ordered are similar. However for the rest of the week, the mean hour is later for Coffee Ice Cream, meaning people order the ice-cream at a much later time in the day.**
+
+
 
 ### Problem 3
-_Loading dataset_
+
+_Loading nynoaa dataset_
 
 ```{r}
 data("ny_noaa")
