@@ -84,25 +84,6 @@ brfss_df %>%
 
 
 ```{r}
-brfss_df %>%
-  spread(key = response, value = data_value) %>%
-  janitor::clean_names(dat = .) %>%
-  group_by(locationabbr, year) %>%
-  summarise( n = n(),
-          mean_excellent = mean(excellent, na.rm = TRUE),
-          mean_very_good = mean(very_good, na.rm = TRUE),
-          mean_good = mean(good, na.rm = TRUE),
-          mean_fair = mean(fair, na.rm = TRUE),
-          mean_poor = mean(poor, na.rm = TRUE)) %>%
-  gather(key = mean_variable, value = mean_value, mean_excellent:mean_poor) %>%
-  ggplot(aes(x = year, y = mean_value, color = locationabbr)) +
-  geom_violin(fill = factor(mean_variable)) +
-  facet_grid(~mean_variable) 
-```
-
-
-
-```{r}
 average_brfss =
   brfss_df %>%
   group_by(locationabbr, year, response) %>%
@@ -228,8 +209,6 @@ noaa_df %>%
 ```
 
 
-
-
 ```{r}
 noaa_df %>% 
   group_by(id, year, month) %>% 
@@ -254,9 +233,6 @@ _extent of NA_
 sum_na = sapply(noaa_df, function(x) sum(is.na(x)))
 prop_na = sapply(noaa_df, function(x) sum(is.na(x)/nrow(noaa_df)))
 rbind(sum_na, prop_na) %>% knitr::kable(digits = 2)
-
-
-
 ```
 
 _Average max temperature in January and in July in each station across years_
