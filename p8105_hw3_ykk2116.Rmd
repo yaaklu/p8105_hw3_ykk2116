@@ -45,7 +45,7 @@ brfss_df %>%
   distinct(locationdesc) %>%
   summarise(n = n()) %>%
   filter( n == 7) %>%
-  knitr::kable()
+  knitr::kable(digits = 2)
 
 ```
 
@@ -79,8 +79,9 @@ brfss_df %>%
   summarise(n = n(),
         mean = mean(excellent, na.rm = TRUE),
         sd = sd(excellent, na.rm = TRUE)) %>%
-  knitr::kable()
+  knitr::kable(digits = 2)
 ```
+
 
 
 ```{r}
@@ -132,7 +133,7 @@ instacart %>%
   ungroup() %>%
   top_n(5, number) %>%
   arrange(desc(number)) %>%
-  knitr::kable()
+  knitr::kable(digits = 2)
 ```
 
 _Plot that shows the number of items ordered in each aisle_
@@ -167,7 +168,7 @@ instacart %>%
   summarise(number = n()) %>%
   top_n(1, number) %>%
   arrange(desc(number)) %>%
-  knitr::kable()
+  knitr::kable(digits = 2)
 ```
 
 _Table showing the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week_
@@ -178,7 +179,7 @@ instacart %>%
 group_by(order_dow, product_name) %>% 
   summarise(mean_hour = mean(order_hour_of_day)) %>% 
   spread(key = order_dow, value = mean_hour) %>% 
-  knitr::kable()
+  knitr::kable(digits = 2)
 ```
 
 
