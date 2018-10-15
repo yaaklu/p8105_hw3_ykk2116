@@ -212,7 +212,7 @@ noaa_df %>%
   facet_grid(~month) + 
   geom_point() +
   theme(legend.position = "none", 
-        axis.text.x = element_text(angle = 45, hjust = 1, size = 8)) +
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 5)) +
   viridis::scale_color_viridis(
     name = "Location", 
     discrete = TRUE) 
@@ -228,7 +228,7 @@ noaa_df %>%
   facet_grid(~month) +
   geom_boxplot() +
   theme(legend.position = "none", 
-        axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 5))
 ```
 
 ```{r}
@@ -241,7 +241,7 @@ my_boxes = noaa_df %>%
   ggplot(aes(x = year, y = snow, fill = year)) +
   geom_boxplot(alpha = 0.3) +
   theme(legend.position = "none", 
-        axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 7))
 
 my_hex / my_boxes
 ```
