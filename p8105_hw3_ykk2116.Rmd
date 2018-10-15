@@ -15,7 +15,9 @@ library(hexbin)
 library(chron)
 ```
 
+
 ### Problem 1
+
 
 _Loading BRFSS dataset_
 
@@ -27,6 +29,8 @@ library(p8105.datasets)
 data(brfss_smart2010)
 ```
 
+
+
 _Cleaning of BRFSS dataset and selection of variables_
 
 ```{r}
@@ -34,6 +38,8 @@ brfss_df = janitor::clean_names(dat = brfss_smart2010) %>%
   filter(topic == "Overall Health") %>%
   mutate(response = forcats::fct_relevel(response, c("Excellent", "Very good", "Good", "Fair", "Poor")))
 ```
+
+
 
 _States that were observed at 7 locations_
 
@@ -49,6 +55,7 @@ brfss_df %>%
 ```
 
 ** According to the table above, in 2002, the states of CT, FL, NC were observed at 7 locations.**
+
 
 
 _Spaghetti plot that shows the number of locations in each state from 2002 to 2010_
@@ -72,6 +79,7 @@ labs(
 **Looking at the plot above, we can see that majority of the states showed a similar trend in the number of locations across all the years. However, for one of the states, there was a huge spike or increase from 2006 to 2007 and it decreased again in 2008. However there was another increase from 2009 to 2010. The particular state is hard to identify as it is.**
 
 
+
 _Table that shows the mean and standard deviation of the "excellent" responses across locations in NY state for 2002, 2006 and 2010_
 
 ```{r}
@@ -90,7 +98,8 @@ brfss_df %>%
 **In the table above, we can see that the number of variables (N) increased through 2002 to 2010; from 25 in 2002, 30 in 2006 and to 45 in 2010. The mean in 2002 was different from the means in 2006 and 2010; the mean for 2006 and 2010 were similar. The standard deviation was highest in 2002 and it was lower in 2006 and lowest in 2010.**
 
 
-_A five-panel plot that shows, for each response category separately, the distribution of these state-level averages over time_
+
+_A five-panel violin plot that shows, for each response category separately, the distribution of state-level averages (average proportion in each response category) over time_
 
 ```{r}
 average_brfss =
@@ -111,13 +120,16 @@ average_brfss %>%
     caption = "BRFSS 2010 Data"
   ) +
   scale_fill_discrete(name = "Response") +
-  theme(axis.text.x = element_text(angle = 45, size = 7, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, size = 6, hjust = 1))
 ```
+
+**According to the violin plot above, overall, the average responses across the years 
+
 
 
 ### Problem 2
 
-_Loading Dataset_
+_Loading Instacart Dataset_
 
 ```{r}
 data("instacart")
