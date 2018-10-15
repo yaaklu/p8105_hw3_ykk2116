@@ -123,7 +123,7 @@ average_brfss %>%
   theme(axis.text.x = element_text(angle = 45, size = 6, hjust = 1))
 ```
 
-**According to the violin plot above, overall, the average responses across the years 
+**According to the violin plot above, overall, the average responses across the years increases in the following order across the type of response: POOR, FAIR, EXCELLENT, GOOD and VERY GOOD.**
 
 
 
@@ -134,6 +134,12 @@ _Loading Instacart Dataset_
 ```{r}
 data("instacart")
 ```
+
+
+_Description of data_
+
+**The instacart dataset has `r nrow(instacart)` observations and `r nrow(instacart)` variables. The variable order_id is a unique identifier of the orders made. The number of unique orders are `r nrow(distinct(instacart, order))`. There are `r nrow(distinct(instacart, user_id))` unique customers. The variables department_name, product_name, and aisle have  corresponding unique identifiers. The variable order_dow represents the day of the week orders were made and the order_hour_of_day represents the time or hour of day orders were made.** 
+
 
 _Number of aisles and which aisles most items are ordered from_
 
