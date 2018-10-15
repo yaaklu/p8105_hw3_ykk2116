@@ -12,6 +12,7 @@ library(tidyverse)
 library(ggthemes)
 library(patchwork)
 library(hexbin)
+library(chron)
 ```
 
 ### Problem 1
@@ -154,15 +155,48 @@ instacart %>%
   filter(aisle == "baking ingredients" | aisle == "dog food care" | aisle == "packaged vegetables fruits") %>%
   group_by(aisle, product_name) %>%
   summarise(number = n()) %>%
-  ungroup() %>%
   top_n(1, number) %>%
   arrange(desc(number)) %>%
   knitr::kable()
 ```
 
- 
+_Table showing the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week_
+
+```{r}
+instacart %>%
+  filter(product_name == "Pink Lady Apples" | product_name == "Coffee Ice Cream") %>%
+group_by(order_dow, product_name) %>% 
+  summarise(mean_hour = mean(order_hour_of_day)) %>% 
+  spread(key = order_dow, value = mean_hour) %>% 
+  knitr::kable()
+```
 
 
+### Problem 3
+_Loading dataset_
+
+```{r}
+data("ny_noaa")
+```
+
+
+```{r}
+noaa_df = ny_noaa %>% 
+  mutate(month = months.Date(date, abbreviate = TRUE),
+         day = chron::days(date),
+         year = chron::years(date),
+         tmax = (as.numeric(tmax))/10,
+         tmin = (as.numeric(tmin))/10,
+         prcp = prcp/10)
+```
+
+
+```{r}
+noaa_df %>% 
+  group_by(snow) %>% 
+  summarise(number = n()) %>% 
+  arrange(desc(number))
+```
 
 
 
