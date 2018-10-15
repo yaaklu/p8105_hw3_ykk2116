@@ -136,7 +136,7 @@ instacart %>%
   mutate(asile = tools::toTitleCase(aisle)) %>%
   ggplot(aes(x = reorder(aisle, -number), y = number, fill = aisle)) +
   geom_col() +
-  theme(axis.title.x = element_text(angle = 80, hjust = 1, size = 8),
+  theme(axis.title.x = element_text(angle = 45, hjust = 1, size = 6),
         legend.position = "none") +
   labs(
     title = "Number of items ordered in each aisle",
@@ -212,7 +212,7 @@ noaa_df %>%
   facet_grid(~month) + 
   geom_point() +
   theme(legend.position = "none", 
-        axis.text.x = element_text(angle = 80, hjust = 1, size = 8)) +
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 8)) +
   viridis::scale_color_viridis(
     name = "Location", 
     discrete = TRUE) 
@@ -228,9 +228,23 @@ noaa_df %>%
   facet_grid(~month) +
   geom_boxplot() +
   theme(legend.position = "none", 
-        axis.text.x = element_text(angle = 80, hjust = 1, size = 8))
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
 ```
 
+```{r}
+my_hex = ggplot(noaa_df, aes(x = tmin, y = tmax)) +
+  geom_hex(aes()) +
+  theme(legend.position = "left")
+        
+my_boxes = noaa_df %>% 
+  filter(snow > 0 & snow < 100) %>% 
+  ggplot(aes(x = year, y = snow, fill = year)) +
+  geom_boxplot(alpha = 0.3) +
+  theme(legend.position = "none", 
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
+
+my_hex / my_boxes
+```
 
 
 
