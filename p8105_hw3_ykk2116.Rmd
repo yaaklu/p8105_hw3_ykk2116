@@ -200,4 +200,40 @@ noaa_df %>%
 
 
 
+
+```{r}
+noaa_df %>% 
+  group_by(id, year, month) %>% 
+  summarize(n = n(),
+            sum = sum(tmax, na.rm = TRUE),
+            mean = mean(tmax, na.rm = TRUE)) %>% 
+  filter(month %in% c("Jan", "Jul")) %>% 
+  ggplot(aes(x = year, y = mean, color = id)) +
+  facet_grid(~month) + 
+  geom_point() +
+  theme(legend.position = "none", 
+        axis.text.x = element_text(angle = 80, hjust = 1, size = 8)) +
+  viridis::scale_color_viridis(
+    name = "Location", 
+    discrete = TRUE) 
+```
+
+
+_Average max temperature in January and in July in each station across years_
+
+```{r}
+noaa_df %>% 
+  filter(month %in% c("Jan", "Jul")) %>% 
+  ggplot(aes(x = year, y = tmax, color = year)) +
+  facet_grid(~month) +
+  geom_boxplot() +
+  theme(legend.position = "none", 
+        axis.text.x = element_text(angle = 80, hjust = 1, size = 8))
+```
+
+
+
+
+
+
  
