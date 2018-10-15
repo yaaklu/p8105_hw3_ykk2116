@@ -69,7 +69,7 @@ labs(
 )
 ```
 
-**Looking at the plot above, we can see that majority of the states showed a similar trend across all the years. However, for one of the states, there was a huge spike or increase from 2006 to 2007 and it decreased again in 2008. However there was another increase from 2009 to 2010. The particular state is hard to identify as it is.**
+**Looking at the plot above, we can see that majority of the states showed a similar trend in the number of locations across all the years. However, for one of the states, there was a huge spike or increase from 2006 to 2007 and it decreased again in 2008. However there was another increase from 2009 to 2010. The particular state is hard to identify as it is.**
 
 
 _Table that shows the mean and standard deviation of the "excellent" responses across locations in NY state for 2002, 2006 and 2010_
@@ -87,6 +87,7 @@ brfss_df %>%
   knitr::kable(digits = 2)
 ```
 
+**In the table above, we can see that the number of variables (N) increased through 2002 to 2010; from 25 in 2002, 30 in 2006 and to 45 in 2010. The mean in 2002 was different from the means in 2006 and 2010; the mean for 2006 and 2010 were similar. The standard deviation was highest in 2002 and it was lower in 2006 and lowest in 2010.**
 
 
 _A five-panel plot that shows, for each response category separately, the distribution of these state-level averages over time_
