@@ -9,10 +9,9 @@ _Loading tidyverse_
 
 ```{r}
 library(tidyverse)
-library(ggthemes)
 library(patchwork)
 library(hexbin)
-library(chron)
+library(ggthemes)
 ```
 
 
@@ -123,7 +122,7 @@ average_brfss %>%
   theme(axis.text.x = element_text(angle = 45, size = 6, hjust = 1))
 ```
 
-**According to the violin plot above, overall, the average responses across the years increases in the following order across the type of response: POOR, FAIR, EXCELLENT, GOOD and VERY GOOD.**
+**According to the violin plot above, overall, the average responses across the years increases in the following order across the type of response: POOR, FAIR, EXCELLENT, GOOD and VERY GOOD. It makes sense that average poor health response would be the lowest and that of very good would be the highest. Also, I would say the varaibilities observed within each response category across the years were somewhat similar; however more variability was seen in EXECELENT and VERY GOOD categories**
 
 
 
@@ -160,8 +159,6 @@ instacart %>%
 **From the output above, there are `r pull(count(distinct(instacart, aisle_id)))` aisles. Also, the output shows the top ten most popular aisles, with the top being fresh vegetables aisles.**
 
 
-
-
 _Bar plot that shows the number of items ordered in each aisle_
 
 ```{r barplot, fig.height=20}
@@ -183,7 +180,7 @@ instacart %>%
 coord_flip()
 ```
 
-**The barplot shows the number of times ordered in each aisle and the highest number of items corresponds to the what was previosuly observed as the 10 most popular aisles.**
+**The barplot shows the number of times ordered in each aisle and the highest number of items ordered were ordered from the aisles which corresponds to what was previously observed as the 10 most popular aisles. Most items were ordered from the fresh vegetables aisle.**
 
 
 _Table showing the most popular item in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”_
@@ -199,7 +196,7 @@ instacart %>%
   knitr::kable(digits = 2)
 ```
 
-**From the table above, the most popular item in the "packaged vegetables fruits" is Organic Baby Spinach", that for "Baking Ingredients" is Light Brown Sugar and that for "dog food care" is Snack Sticks Chicken & Rice Recipe Dog Treats**
+**From the table above, the most popular item in the "packaged vegetables fruits" is Organic Baby Spinach", that for "Baking Ingredients" is Light Brown Sugar and that for "dog food care" is Snack Sticks Chicken & Rice Recipe Dog Treats. Also, the numbers were in descreasing order: spinach, brown sugar and dog treats.**
 
 
 _Table showing the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week_
@@ -213,7 +210,7 @@ group_by(order_dow, product_name) %>%
   knitr::kable(digits = 2)
 ```
 
-**From the output above, for the 1st and 6th day of the week, the mean hour of the day for which the 2 products are ordered are similar. However for the rest of the week, the mean hour is later for Coffee Ice Cream, meaning people order the ice-cream at a much later time in the day.**
+**From the output above, for the 1st and 6th day of the week, the mean hour of the day for which the 2 products are ordered are similar. However for the rest of the week, the mean hour is later for Coffee Ice Cream, suggesting that people order the ice-cream at a much later time in the day.**
 
 
 
@@ -251,28 +248,9 @@ noaa_df %>%
 
 **For snowfall, the most commonly observed values are 0 and NA. This is probably due to the fact that most days of the year there is no snowfall. Additionally, there might have been stations that may not have any records of snow due to technical difficulties in recording or perhaps they do not record any snowfall even if there are snow days.**
 
+
+
 _A two-panel plot showing the average max temperature in January and in July in each station across years_
-
-```{r}
-noaa_df %>% 
-  group_by(id, year, month) %>% 
-  summarize(n = n(),
-            sum = sum(tmax, na.rm = TRUE),
-            mean = mean(tmax, na.rm = TRUE)) %>% 
-  filter(month %in% c("Jan", "Jul")) %>% 
-  ggplot(aes(x = year, y = mean, color = month)) +
-  facet_grid(~month) + 
-  geom_point() +
-  theme(legend.position = "none", 
-        axis.text.x = element_text(angle = 45, hjust = 1, size = 5)) +
-  viridis::scale_color_viridis(
-    name = "Location", 
-    discrete = TRUE) 
-```
-
-**Looking at the plot above, generally the average temperatures were higher in July, compared to January, although there were some very few outliers recorded.**
-
-_Average max temperature in January and in July in each station across years_
 
 ```{r}
 noaa_df %>% 
@@ -284,9 +262,11 @@ noaa_df %>%
         axis.text.x = element_text(angle = 45, hjust = 1, size = 5))
 ```
 
+**Looking at the plot above, generally the average temperatures were higher in July, compared to January, although there were some very few outliers recorded for both months. It is  expected that average temperatures are higher in July**
 
 
 
+_A two-panel plot showing (i) tmax vs tmin for the full dataset and (ii) make a plot showing the distribution of snowfall values greater than 0 and less than 100 separately by year_
 
 ```{r}
 my_hex = ggplot(noaa_df, aes(x = tmin, y = tmax)) +
@@ -303,6 +283,7 @@ my_boxes = noaa_df %>%
 my_hex / my_boxes
 ```
 
+**The hexagonal heat map shows the distribution (count) of the pairs of tmax and tmin. The box plot, shows that there are more variability in snowfall in the last ten years compared to first ten years. Additionally, we can see that, there are more outliers in the last ten years.**
 
 
 
